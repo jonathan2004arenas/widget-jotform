@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <script src="https://js.jotform.com/JotFormCustomWidget.min.js"></script>
+
+</head>
+
+
+<body>
+
+    <div>
+
+        <input
+            type="text"
+            id="idEquipo"
+            placeholder="Ingrese el código del equipo"
+        >
+
+        <div id="mensaje"></div>
+
+    </div>
+
+
+    <script>
+
+        console.log("🚀 Script del widget iniciado");
+
+
+        const API_URL =
+        "https://script.google.com/macros/s/AKfycbzrgqMiHOecMAJAcndojlloZsONRDTVTXmHaWfFd6ujaxXjtH1GxhjR6UYaXO-xnkKB3Q/exec";
+
+
+        const campoEquipo =
+            document.getElementById("idEquipo");
+
+
+        const mensaje =
+            document.getElementById("mensaje");
+
+
+        let datosEquipo = null;
+
+
+        /* ==========================================
+           BUSCAR EQUIPO
+        ========================================== */
+
+        async function buscarEquipo() {
+
+            const id =
+                campoEquipo.value.trim();
+
+
+            console.log(
+                "🔎 Intentando buscar equipo:",
+                id
+            );
+
+
+            if (!id) {
+
+                mensaje.textContent =
+                    "Ingrese un código de equipo";
+
+                return;
+
+            }
+
+
+            mensaje.textContent =
+                "⏳ Buscando equipo...";
+
+
+            try {
+
+                const url =
+                    API_URL +
+                    "?tipo=equipo&id=" +
+                    encodeURIComponent(id);
+
+
+                console.log(
+                    "🌐 Consultando:",
+                    url
+                );
+
+
+                const respuesta =
+                    await fetch(url);
+
+
+                console.log(
+                    "📡 Estado respuesta:",
+                    respuesta.status
+                );
+
+
+                const datos =
+                    await respuesta.json();
+
+
+                console.log(
+                    "📦 Datos recibidos:",
+                    datos
+                );
+
+
+                if (!datos.encontrado) {
+
+                    mensaje.textContent =
+                        "❌ Equipo no encontrado";
+
+                    datosEquipo = null;
+
+                    return;
+
+                }
+
+
+                datosEquipo = datos;
+
+
+                mensaje.textContent =
+                    "✅ Equipo encontrado";
+
+
+                console.log(
+                    "✅ Equipo encontrado correctamente"
+                );
+
+
+                /* ======================================
+                   ENVIAR DATOS A JOTFORM
+                ====================================== */
+
+                if (
+                    typeof JFCustomWidget !==
+                    "undefined"
+                ) {
+
+                    JFCustomWidget.sendData({
+
+                        value:
+                            JSON.stringify({
+
+                                tipo: "equipo",
+
+                                idEquipo:
+                                    datos.idEquipo || "",
+
+                                nombreEquipo:
+                                    datos.nombreEquipo || "",
+
+                                categoria:
+                                    datos.categoria || "",
+
+                                marcaModelo:
+                                    datos.marcaModelo || "",
+
+                                correoIngeniero:
+                                    datos.correoIngeniero || "",
+
+                                estadoContrato:
+                                    datos.estadoContrato || "",
+
+                                proveedorGarantia:
+                                    datos.proveedorGarantia || "",
+
+                                idSede:
+                                    datos.idSede || ""
+
+                            })
+
+                    });
+
+                    /* ==========================================
+                    ENVIAR DATOS AL FORMULARIO PADRE
+                    ========================================== */
+
+                    window.parent.postMessage(
+                        {
+                            tipo: "AUTOCOMPLETAR_EQUIPO",
+                            nombreEquipo: datos.nombreEquipo || ""
+                        },
+                        "*"
+                    );
+
+                    console.log(
+                        "📤 Mensaje enviado al formulario padre:",
+                        datos.nombreEquipo
+                    );
+
+                }
+
+
+            } catch (error) {
+
+                console.error(
+                    "❌ Error completo:",
+                    error
+                );
+
+
+                mensaje.textContent =
+                    "❌ Error consultando la base de datos";
+
+            }
+
+        }
+
+
+        /* ==========================================
+           ACTIVAR EVENTOS
+        ========================================== */
+
+        function activarEventos() {
+
+            console.log(
+                "🎯 Activando eventos del campo"
+            );
+
+
+            if (!campoEquipo) {
+
+                console.error(
+                    "❌ No se encontró el input idEquipo"
+                );
+
+                return;
+
+            }
+
+
+            /*
+            CAMBIO DEL CAMPO
+            */
+
+            campoEquipo.addEventListener(
+
+                "change",
+
+                function() {
+
+                    buscarEquipo();
+
+                }
+
+            );
+
+
+            /*
+            CUANDO SALE DEL CAMPO
+            */
+
+            campoEquipo.addEventListener(
+
+                "blur",
+
+                function() {
+
+                    buscarEquipo();
+
+                }
+
+            );
+
+
+            /*
+            CUANDO PRESIONA ENTER
+            */
+
+            campoEquipo.addEventListener(
+
+                "keydown",
+
+                function(event) {
+
+                    if (
+                        event.key === "Enter"
+                    ) {
+
+                        event.preventDefault();
+
+                        buscarEquipo();
+
+                    }
+
+                }
+
+            );
+
+
+            console.log(
+                "✅ Eventos activados correctamente"
+            );
+
+        }
+
+
+        /* ==========================================
+           ACTIVAR PARA LIVE SERVER
+        ========================================== */
+
+        activarEventos();
+
+
+        /* ==========================================
+           ACTIVAR COMUNICACIÓN CON JOTFORM
+        ========================================== */
+
+        if (
+            typeof JFCustomWidget !==
+            "undefined"
+        ) {
+
+            JFCustomWidget.subscribe(
+
+                "ready",
+
+                function() {
+
+                    console.log(
+                        "🟢 Widget conectado con Jotform"
+                    );
+
+                }
+
+            );
+
+
+            JFCustomWidget.subscribe(
+
+                "submit",
+
+                function() {
+
+                    console.log(
+                        "📨 Jotform solicitó envío"
+                    );
+
+
+                    JFCustomWidget.sendSubmit({
+
+                        valid: true,
+
+                        value:
+                            JSON.stringify(
+                                datosEquipo || {}
+                            )
+
+                    });
+
+                }
+
+            );
+
+        }
+
+    </script>
+
+</body>
+
+</html>
