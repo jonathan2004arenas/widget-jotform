@@ -25,6 +25,14 @@
 
         <div id="mensaje"></div>
 
+        <input type="hidden" name="nombre_equipo" id="nombreEquipo">
+        <input type="hidden" name="categoria" id="categoria">
+        <input type="hidden" name="marca_modelo" id="marcaModelo">
+        <input type="hidden" name="correo_ingeniero" id="correoIngeniero">
+        <input type="hidden" name="estado_contrato" id="estadoContrato">
+        <input type="hidden" name="proveedor_garantia" id="proveedorGarantia">
+        <input type="hidden" name="id_sede" id="idSede">
+
     </div>
 
 
@@ -145,39 +153,38 @@
                     "undefined"
                 ) {
 
+                document.getElementById("nombreEquipo").value =
+                    datos.nombreEquipo || "";
+
+                document.getElementById("categoria").value =
+                    datos.categoria || "";
+
+                document.getElementById("marcaModelo").value =
+                    datos.marcaModelo || "";
+
+                document.getElementById("correoIngeniero").value =
+                    datos.correoIngeniero || "";
+
+                document.getElementById("estadoContrato").value =
+                    datos.estadoContrato || "";
+
+                document.getElementById("proveedorGarantia").value =
+                    datos.proveedorGarantia || "";
+
+                document.getElementById("idSede").value =
+                    datos.idSede || "";
+
                     JFCustomWidget.sendData({
-
-                        value:
-                            JSON.stringify({
-
-                                tipo: "equipo",
-
-                                idEquipo:
-                                    datos.idEquipo || "",
-
-                                nombreEquipo:
-                                    datos.nombreEquipo || "",
-
-                                categoria:
-                                    datos.categoria || "",
-
-                                marcaModelo:
-                                    datos.marcaModelo || "",
-
-                                correoIngeniero:
-                                    datos.correoIngeniero || "",
-
-                                estadoContrato:
-                                    datos.estadoContrato || "",
-
-                                proveedorGarantia:
-                                    datos.proveedorGarantia || "",
-
-                                idSede:
-                                    datos.idSede || ""
-
-                            })
-
+                        valid: true,
+                        value: JSON.stringify([{
+                            nombre_equipo: datos.nombreEquipo || "",
+                            categoria: datos.categoria || "",
+                            marca_modelo: datos.marcaModelo || "",
+                            correo_ingeniero: datos.correoIngeniero || "",
+                            estado_contrato: datos.estadoContrato || "",
+                            proveedor_garantia: datos.proveedorGarantia || "",
+                            id_sede: datos.idSede || ""
+                        }])
                     });
 
                     /* ==========================================
