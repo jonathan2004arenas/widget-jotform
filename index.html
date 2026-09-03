@@ -25,14 +25,6 @@
 
         <div id="mensaje"></div>
 
-        <input type="hidden" name="nombre_equipo" id="nombreEquipo">
-        <input type="hidden" name="categoria" id="categoria">
-        <input type="hidden" name="marca_modelo" id="marcaModelo">
-        <input type="hidden" name="correo_ingeniero" id="correoIngeniero">
-        <input type="hidden" name="estado_contrato" id="estadoContrato">
-        <input type="hidden" name="proveedor_garantia" id="proveedorGarantia">
-        <input type="hidden" name="id_sede" id="idSede">
-
     </div>
 
 
@@ -157,15 +149,16 @@
                     LLENAR CAMPO EXTERNO DE JOTFORM
                     ====================================== */
 
-                    JFCustomWidget.setFieldsValueByLabel([
-                        {
-                            label: "Nombre_equipo",
-                            value: datos.nombreEquipo || ""
-                        }
-                    ]);
+                    console.log("🔍 Métodos disponibles en JFCustomWidget:");
+                    console.log(JFCustomWidget);
 
                     console.log(
-                        "📤 Intentando llenar Nombre_equipo:",
+                        "🔍 Tipo de setFieldsValueByLabel:",
+                        typeof JFCustomWidget.setFieldsValueByLabel
+                    );
+
+                    console.log(
+                        "🔍 Datos que queremos enviar:",
                         datos.nombreEquipo
                     );
 
