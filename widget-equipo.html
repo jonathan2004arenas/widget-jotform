@@ -180,21 +180,9 @@
 
                     });
 
-                    /* ==========================================
-                    ENVIAR DATOS AL FORMULARIO PADRE
-                    ========================================== */
-
-                    window.parent.postMessage(
-                        {
-                            tipo: "AUTOCOMPLETAR_EQUIPO",
-                            nombreEquipo: datos.nombreEquipo || ""
-                        },
-                        "*"
-                    );
 
                     console.log(
-                        "📤 Mensaje enviado al formulario padre:",
-                        datos.nombreEquipo
+                        "📤 Datos enviados a Jotform"
                     );
 
                 }
