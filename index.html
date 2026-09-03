@@ -153,31 +153,31 @@
                     "undefined"
                 ) {
 
-                /* ======================================
-                LLENAR CAMPO EXTERNO DE JOTFORM
-                ====================================== */
+                    /* ======================================
+                    LLENAR CAMPO EXTERNO DE JOTFORM
+                    ====================================== */
 
-                JFCustomWidget.setFieldsValueByLabel([
-                    {
-                        label: "Nombre_equipo",
-                        value: datos.nombreEquipo || ""
-                    }
-                ]);
+                    JFCustomWidget.setFieldsValueByLabel([
+                        {
+                            label: "Nombre_equipo",
+                            value: datos.nombreEquipo || ""
+                        }
+                    ]);
 
-                console.log(
-                    "📤 Intentando llenar Nombre_equipo:",
-                    datos.nombreEquipo
-                );
+                    console.log(
+                        "📤 Intentando llenar Nombre_equipo:",
+                        datos.nombreEquipo
+                    );
 
 
-                /* ======================================
-                GUARDAR EL VALOR DEL WIDGET
-                ====================================== */
+                    /* ======================================
+                    GUARDAR EL VALOR DEL WIDGET
+                    ====================================== */
 
-                JFCustomWidget.sendData({
-                    valid: true,
-                    value: datos.idEquipo || ""
-                });
+                    JFCustomWidget.sendData({
+                        valid: true,
+                        value: datos.idEquipo || ""
+                    });
 
                     /* ==========================================
                     ENVIAR DATOS AL FORMULARIO PADRE
