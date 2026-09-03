@@ -153,22 +153,31 @@
                     "undefined"
                 ) {
 
-                document.getElementById("q24_nombre_equipo").value =
-                    datos.nombreEquipo || "";
+                /* ======================================
+                LLENAR CAMPO EXTERNO DE JOTFORM
+                ====================================== */
+
+                JFCustomWidget.setFieldsValueByLabel([
+                    {
+                        label: "Nombre_equipo",
+                        value: datos.nombreEquipo || ""
+                    }
+                ]);
+
+                console.log(
+                    "📤 Intentando llenar Nombre_equipo:",
+                    datos.nombreEquipo
+                );
 
 
-                    JFCustomWidget.sendData({
-                        valid: true,
-                        value: JSON.stringify([{
-                            nombre_equipo: datos.nombreEquipo || "",
-                            categoria: datos.categoria || "",
-                            marca_modelo: datos.marcaModelo || "",
-                            correo_ingeniero: datos.correoIngeniero || "",
-                            estado_contrato: datos.estadoContrato || "",
-                            proveedor_garantia: datos.proveedorGarantia || "",
-                            id_sede: datos.idSede || ""
-                        }])
-                    });
+                /* ======================================
+                GUARDAR EL VALOR DEL WIDGET
+                ====================================== */
+
+                JFCustomWidget.sendData({
+                    valid: true,
+                    value: datos.idEquipo || ""
+                });
 
                     /* ==========================================
                     ENVIAR DATOS AL FORMULARIO PADRE
