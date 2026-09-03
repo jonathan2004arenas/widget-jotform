@@ -162,22 +162,6 @@
                         datos.nombreEquipo
                     );
 
-                    /* ======================================
-                    LLENAR NOMBRE DEL EQUIPO EN JOTFORM
-                    ====================================== */
-
-                    JFCustomWidget.setFieldsValueByLabel([
-                        {
-                            label: "Nombre_equipo",
-                            value: datos.nombreEquipo || ""
-                        }
-                    ]);
-
-                    console.log(
-                        "✅ Intentando colocar Nombre_equipo:",
-                        datos.nombreEquipo
-                    );
-
 
                     /* ======================================
                     GUARDAR EL VALOR DEL WIDGET
@@ -200,6 +184,7 @@
                         "*"
                     );
 
+                    
                     console.log(
                         "📤 Mensaje enviado al formulario padre:",
                         datos.nombreEquipo
