@@ -169,7 +169,10 @@
                     JFCustomWidget.setFieldsValueByLabel([
                         {
                             label: "Nombre_equipo",
-                            value: datos.nombreEquipo || ""
+                            value: datos.nombreEquipo || "",
+
+                            label: "Marca_modelo",
+                            value: datos.marcaModelo || ""
                         }
                     ]);
 
@@ -194,7 +197,10 @@
                     window.parent.postMessage(
                         {
                             tipo: "AUTOCOMPLETAR_EQUIPO",
-                            nombreEquipo: datos.nombreEquipo || ""
+                            nombreEquipo: datos.nombreEquipo || "",
+
+                            tipo: "AUTOCOMPLETAR_EQUIPO",
+                            marcaModelo: datos.marcaModelo || ""
                         },
                         "*"
                     );
